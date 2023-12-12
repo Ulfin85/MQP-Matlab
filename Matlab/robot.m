@@ -17,8 +17,8 @@ classdef robot
       %          [0;1;0;-self.z1;0;x1],...
       %          [0;1;0;-z1-z2;0;-x2],...
       %          [1;0;0;0;z1+z2;0]];
-      Slist = get_Slist
-      M = get_M
+      Slist;
+      M;
    end
    methods
        function slist = get_Slist(self)
