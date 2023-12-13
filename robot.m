@@ -1,5 +1,5 @@
-classdef robot
-    properties
+classdef robot < handle
+    properties (Access = public)
       z0 = 0.118;
       z1 = 0.082;
       x1 = 0.07;
@@ -21,6 +21,11 @@ classdef robot
       M;
    end
    methods
+       function init(self)
+           self.Slist = self.get_Slist;
+           self.M = self.get_M;
+           % ADD MLIST
+       end
        function slist = get_Slist(self)
            slist = [[0;0;1;0;0;0], ...
                [0;1;0;-self.z1-self.z0;0;self.x1],...
@@ -34,7 +39,7 @@ classdef robot
                0, 1, 0, self.y4;
                0, 0, 1, self.z4;
                0, 0, 0, 1
-           ]
+           ];
            % self.M = M
        end
 
@@ -47,8 +52,11 @@ classdef robot
                 0, 1, 2*t_f, 3*t_f^2, 4*t_f^3, 5*t_f^4;
                 0, 0, 2, 6*t_f, 12*t_f^2, 20*t_f^3;
             ];
-            coeffs = inv(M) * [qo; vo; ao; qf; vf; af]
+            coeffs = inv(M) * [qo; vo; ao; qf; vf; af];
        end
-
+       
+       function ik = doIK(self, thetas)
+           ik = IKinSpace(self.Slist,self.M, thetas, 0.01,0.01);
+       end
    end
 end
