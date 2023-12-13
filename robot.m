@@ -43,7 +43,7 @@ classdef robot < handle
            % self.M = M
        end
 
-       function coeffs = getCoeffs(self)
+       function coeffs = getCoeffs(self, qo, qf, vo, vf, ao, af, to, t_f)
             M = [
                 1, to, to^2, to^3, to^4, to^5;
                 0, 1, 2*to, 3*to^2, 4*to^3, 5*to^4;
@@ -55,8 +55,8 @@ classdef robot < handle
             coeffs = inv(M) * [qo; vo; ao; qf; vf; af];
        end
        
-       function ik = doIK(self, thetas)
-           ik = IKinSpace(self.Slist,self.M, thetas, 0.01,0.01);
+       function ik = doIK(self,T, thetas)
+           ik = IKinSpace(self.Slist,self.M, T, thetas, 0.01,0.01);
        end
    end
 end
