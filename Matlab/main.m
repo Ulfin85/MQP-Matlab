@@ -12,5 +12,10 @@ joint4 = 0;
 
 % load the bot data
 [smiData, Ts] = robot_data();
+
+q1 = bot.getCoeffs(0, 45, 0, 0, 0, 0, 0, 5)
+
+
 % run the simulation
 simout = sim("MainAssembly1NoSteppers.slx")
+time = getCurrentTime(simout)

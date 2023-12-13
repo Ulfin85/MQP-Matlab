@@ -38,7 +38,7 @@ classdef robot
            % self.M = M
        end
 
-       function coeffs = getCoeffs(self)
+       function coeffs = getCoeffs(self, qo, qf, vo, vf, ao, af, to, t_f)
             M = [
                 1, to, to^2, to^3, to^4, to^5;
                 0, 1, 2*to, 3*to^2, 4*to^3, 5*to^4;
@@ -47,7 +47,7 @@ classdef robot
                 0, 1, 2*t_f, 3*t_f^2, 4*t_f^3, 5*t_f^4;
                 0, 0, 2, 6*t_f, 12*t_f^2, 20*t_f^3;
             ];
-            coeffs = inv(M) * [qo; vo; ao; qf; vf; af]
+            coeffs = inv(M) * [qo; vo; ao; qf; vf; af];
        end
 
    end
