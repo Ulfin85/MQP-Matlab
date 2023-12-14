@@ -6,15 +6,21 @@ bot = robot;
 bot.init();
 
 % define joints (home config)
-joint1 = 0;
-joint2 = 0;
-joint3 = 0;
-joint4 = 0;
+t = 0:0.1:5;
+j = 0:pi/50:pi;
+%joint1 = [1 0;2 pi/2;3 pi;4 pi/2;5 0];
+joint1 = [t',j'];
+joint2 = [1 0;2 0;3 0;4 0;5 0];
+joint3 = [1 0;2 0;3 0;4 0;5 0];
+joint4 = [1 0;2 0;3 0;4 0;5 0];
+
+%joints = [joint1,joint2,joint3,joint4];
+
 bot.doIK(bot.M,[0;0;0;0]);
 
-q1 = bot.getCoeffs(0, 45, 0, 0, 0, 0, 0, 5)
+q1 = bot.getCoeffs(0, 45, 0, 0, 0, 0, 0, 5);
 % load the bot data
 [smiData, Ts] = robot_data();
 % run the simulation
 simout = sim("MainAssembly1NoSteppers.slx");
-time = getCurrentTime(simout)
+%time = getCurrentTime(simout)
