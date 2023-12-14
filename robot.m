@@ -56,7 +56,7 @@ classdef robot < handle
        end
 
        function q = get_q(self,t, a)
-           for i = 1:length(t)
+           for i = 1:length(t)  
                 q(:,i) = a(1) + a(2)*t(i) + a(3)*t(i)^2 + a(4)*t(i)^3 +a(5)*t(i)^4 + a(6)*t(i)^5;
            end
        end
@@ -65,6 +65,12 @@ classdef robot < handle
            j = [t', self.get_q(t,a)'];
        end
 
+       function [j1,j2,j3,j4] = build_traj(self,t, q)
+           j1 = self.build_joint(t,q(:,1));
+           j2 = self.build_joint(t,q(:,2));
+           j3 = self.build_joint(t,q(:,3));
+           j4 = self.build_joint(t,q(:,4));
+       end
        function ik = doIK(self,T, thetas)
            ik = IKinSpace(self.Slist,self.M, T, thetas, 0.01,0.01);
        end
