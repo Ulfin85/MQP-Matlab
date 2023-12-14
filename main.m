@@ -9,7 +9,7 @@ bot.init();
 t = 0:0.1:5;
 j = 0:pi/50:pi;
 %joint1 = [1 0;2 pi/2;3 pi;4 pi/2;5 0];
-joint1 = [t',j'];
+%joint1 = [t',j'];
 joint2 = [1 0;2 0;3 0;4 0;5 0];
 joint3 = [1 0;2 0;3 0;4 0;5 0];
 joint4 = [1 0;2 0;3 0;4 0;5 0];
@@ -18,7 +18,8 @@ joint4 = [1 0;2 0;3 0;4 0;5 0];
 
 bot.doIK(bot.M,[0;0;0;0]);
 
-q1 = bot.getCoeffs(0, 45, 0, 0, 0, 0, 0, 5);
+q1 = bot.getCoeffs(0, pi/2, 0, 0, 0, 0, 0, 5);
+joint1 = bot.build_joint(t,q1);
 % load the bot data
 [smiData, Ts] = robot_data();
 % run the simulation

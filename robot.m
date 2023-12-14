@@ -54,7 +54,17 @@ classdef robot < handle
             ];
             coeffs = inv(M) * [qo; vo; ao; qf; vf; af];
        end
+
+       function q = get_q(self,t, a)
+           for i = 1:length(t)
+                q(:,i) = a(1) + a(2)*t(i) + a(3)*t(i)^2 + a(4)*t(i)^3 +a(5)*t(i)^4 + a(6)*t(i)^5;
+           end
+       end
        
+       function j = build_joint(self,t,a)
+           j = [t', self.get_q(t,a)'];
+       end
+
        function ik = doIK(self,T, thetas)
            ik = IKinSpace(self.Slist,self.M, T, thetas, 0.01,0.01);
        end
