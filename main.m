@@ -16,21 +16,35 @@ joint4 = [1 0;2 0;3 0;4 0;5 0];
 
 %joints = [joint1,joint2,joint3,joint4];
 
-bot.doIK(bot.M,[0;0;0;0]);
+bot.doIK(bot.M, [0;0;0;0]);
 
-q1 = bot.getCoeffs(0, 0, 0, 0, 0, 0, 0, 5);
+q1 = bot.getCoeffs(0, deg2rad(0), 0, 0, 0, 0, 0, 5);
 %joint1 = bot.build_joint(t,q1);
 
-q2 = bot.getCoeffs(0, pi/2, 0, 0, 0, 0, 0, 5);
+q2 = bot.getCoeffs(0, deg2rad(0), 0, 0, 0, 0, 0, 5);
 %joint2 = bot.build_joint(t,q2);
 
-q3 = bot.getCoeffs(0, 0, 0, 0, 0, 0, 0, 5);
+q3 = bot.getCoeffs(0, deg2rad(90), 0, 0, 0, 0, 0, 5);
 %joint3 = bot.build_joint(t,q3);
 
-q4 = bot.getCoeffs(0, 0, 0, 0, 0, 0, 0, 5);
+q4 = bot.getCoeffs(0, deg2rad(0), 0, 0, 0, 0, 0, 5);
 %joint4 = bot.build_joint(t,q4);
 
 [joint1, joint2, joint3, joint4] = bot.build_traj(t,[q1,q2,q3,q4]);
+
+[joint1_info, joint2_info, joint3_info, joint4_info] = bot.getDynamicsInfo(joint1, joint2, joint3, joint4);
+bot.Slist
+torques = bot.getTorques(joint1_info, joint2_info, joint3_info, joint4_info);
+
+%Plot Data
+plot(transpose(t), torques(:,1))
+hold on
+plot(transpose(t), torques(:,2))
+plot(transpose(t), torques(:,3))
+plot(transpose(t), torques(:,4))
+legend('Joint 1', 'Joint 2', 'Joint 3', 'Joint 4')
+xlabel('time')
+ylabel('Torque (gram * meter)')
 
 % load the bot data
 [smiData, Ts] = robot_data();
